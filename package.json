@@ -2,8 +2,9 @@
   "name": "hots-medallion-guest",
   "version": "1.0.0",
   "description": "client for the hots-medallion tracker app",
-  "main": "index.js",
+  "main": "./dist/main.js",
   "scripts": {
+    "dev:electron": "NODE_ENV=development webpack --config webpack.electron.config.js --mode development && electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
