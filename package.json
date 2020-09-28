@@ -41,8 +41,11 @@
     "dependencies": {
         "@types/react": "^16.9.49",
         "@types/react-dom": "^16.9.8",
+        "immutable": "^4.0.0-rc.12",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
+        "react-redux": "^7.2.1",
+        "redux": "^4.0.5",
         "sockjs": "^0.3.21"
     }
 }
