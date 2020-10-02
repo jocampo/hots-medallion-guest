@@ -1,5 +1,4 @@
 import { List } from 'immutable';
-import { Action, ActionCreatorsMapObject } from 'redux';
 import { Hero, Room, Teams, User } from '../entities/types';
 import { ActionTypes, BaseFSAAction } from './actions';
 
