@@ -3,7 +3,8 @@ import ReactDom from 'react-dom';
 import store from './redux/create-store';
 import { Provider } from 'react-redux';
 import HomeComponent from './components/home';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import WSHandler from './middleware/ws-client';
 
 const mainElement = document.createElement('div');
