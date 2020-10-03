@@ -15,7 +15,7 @@ interface WsPayload {
 
 const WS_PORT = 8080;
 
-const roomsWebSocket = new SockJS(`ws://${location.hostname}:${WS_PORT}/${WS_ROUTES.ROOMS}`);
+const roomsWebSocket = new SockJS(`http://${location.hostname}:${WS_PORT}/${WS_ROUTES.ROOMS}`);
 
 roomsWebSocket.onmessage = (msg) => processWSMessage(JSON.parse(msg as any));
 roomsWebSocket.onopen = () => console.log('holi');
