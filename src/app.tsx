@@ -1,3 +1,4 @@
+import './reset.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import store from './redux/create-store';
