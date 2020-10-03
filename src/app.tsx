@@ -3,9 +3,10 @@ import ReactDom from 'react-dom';
 import store from './redux/create-store';
 import { Provider } from 'react-redux';
 import HomeComponent from './components/home';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WSHandler from './middleware/ws-client';
+import './app.scss';
 
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);
