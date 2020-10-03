@@ -67,7 +67,6 @@ class WSHandler {
 
     handleOnOpen(openEvent: OpenEvent) {
         this.hasConnectionBeenEstablished = true;
-        console.log(openEvent);
         toast.info('Connected successfully!');
     }
 
@@ -76,7 +75,7 @@ class WSHandler {
             toast.error('Unable to reach server');
             this.hasConnectionBeenEstablished = false;
         } else {
-            toast.error('Connected closed!');
+            toast.error('Connection with the server lost!');
         }
     }
 }
