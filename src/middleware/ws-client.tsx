@@ -77,6 +77,8 @@ class WSHandler {
         } else {
             toast.error('Connection with the server lost!');
         }
+
+        // TODO: Should we attempt to reconnect after X delay?
     }
 }
 
