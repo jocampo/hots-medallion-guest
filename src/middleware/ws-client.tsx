@@ -1,8 +1,10 @@
 import { toast } from 'react-toastify';
+import { Store } from 'redux';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SockJS, { OPEN } from 'sockjs-client';
 import GuestState from '../redux/guest-state';
 
+const WS_PORT = 8080;
 enum WS_ROUTES {
     ROOMS = 'rooms',
 }
@@ -15,20 +17,13 @@ interface WsPayload {
     data: AbstractPayloadData;
 }
 
-const WS_PORT = 8080;
-
-const processWSMessage = (payload: WsPayload) => {
-    console.log('Received payload from ws', JSON.stringify(payload));
-    console.log(this);
-};
-
 class WSHandler {
     roomsWebSocket: WebSocket | null = null;
 
     // Redux store ref
-    store: GuestState | null = null;
+    store: Store<GuestState> | null = null;
 
-    constructor(store: GuestState) {
+    constructor(store: Store<GuestState>) {
         this.store = store;
     }
 
@@ -36,9 +31,9 @@ class WSHandler {
         if (!this.roomsWebSocket) {
             try {
                 this.roomsWebSocket = new SockJS(`http://${location.hostname}:${WS_PORT}/${WS_ROUTES.ROOMS}`);
-                this.roomsWebSocket.onmessage = (msg) => processWSMessage(JSON.parse(msg as any));
-                this.roomsWebSocket.onopen = () => console.log('holi');
-                this.roomsWebSocket.onclose = () => console.log('yikes, rip');
+                this.roomsWebSocket.onmessage = (msg) => this.handleWSMessage(JSON.parse(msg as any));
+                this.roomsWebSocket.onopen = this.handleOnOpen;
+                this.roomsWebSocket.onclose = this.handleOnClose;
             } catch (e) {
                 console.info(e);
                 toast.error('Failed to connect to server...');
@@ -61,6 +56,19 @@ class WSHandler {
 
     isConnected(): boolean {
         return this.roomsWebSocket !== null && this.roomsWebSocket.readyState === OPEN;
+    }
+
+    handleWSMessage(payload: WsPayload) {
+        console.log('Received payload from ws', JSON.stringify(payload));
+        console.log(this);
+    }
+
+    handleOnOpen(wut) {
+        toast.info('Connected successfully!');
+    }
+
+    handleOnClose(wat) {
+        toast.error('Connected closed!');
     }
 }
 
