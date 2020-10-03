@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { Store } from 'redux';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import SockJS, { OPEN } from 'sockjs-client';
+import SockJS, { OPEN, OpenEvent } from 'sockjs-client';
 import GuestState from '../redux/guest-state';
 
 const WS_PORT = 8080;
@@ -23,6 +23,8 @@ class WSHandler {
     // Redux store ref
     store: Store<GuestState> | null = null;
 
+    hasConnectionBeenEstablished = false;
+
     constructor(store: Store<GuestState>) {
         this.store = store;
     }
@@ -32,8 +34,8 @@ class WSHandler {
             try {
                 this.roomsWebSocket = new SockJS(`http://${location.hostname}:${WS_PORT}/${WS_ROUTES.ROOMS}`);
                 this.roomsWebSocket.onmessage = (msg) => this.handleWSMessage(JSON.parse(msg as any));
-                this.roomsWebSocket.onopen = this.handleOnOpen;
-                this.roomsWebSocket.onclose = this.handleOnClose;
+                this.roomsWebSocket.onclose = this.handleOnClose.bind(this);
+                this.roomsWebSocket.onopen = this.handleOnOpen.bind(this);
             } catch (e) {
                 console.info(e);
                 toast.error('Failed to connect to server...');
@@ -63,12 +65,19 @@ class WSHandler {
         console.log(this);
     }
 
-    handleOnOpen(wut) {
+    handleOnOpen(openEvent: OpenEvent) {
+        this.hasConnectionBeenEstablished = true;
+        console.log(openEvent);
         toast.info('Connected successfully!');
     }
 
-    handleOnClose(wat) {
-        toast.error('Connected closed!');
+    handleOnClose(closeEvent: CloseEvent) {
+        if (!this.hasConnectionBeenEstablished) {
+            toast.error('Unable to reach server');
+            this.hasConnectionBeenEstablished = false;
+        } else {
+            toast.error('Connected closed!');
+        }
     }
 }
 
