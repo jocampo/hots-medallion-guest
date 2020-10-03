@@ -20,7 +20,6 @@ class App extends React.Component {
         return (
             <WebSocketContext.Provider value={wsHandler}>
                 <Provider store={store}>
-                    <p>:D</p>
                     <HomeComponent />
                     <ToastContainer />
                 </Provider>
