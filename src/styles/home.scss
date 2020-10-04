@@ -1,0 +1,34 @@
+@use '../styles/variables';
+@use '../styles/fonts';
+
+.home-wrapper {
+    height: calc(100vh - #{variables.$footer-height});
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .title-wrapper {
+        height: 100%;
+        width: 50%;
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .text {
+            }
+
+            .large {
+            }
+
+            .xlarge {
+            }
+        }
+    }
+
+    .form-wrapper {
+        height: 100%;
+        width: 50%;
+    }
+}
