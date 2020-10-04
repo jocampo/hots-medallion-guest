@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import WSHandler from './middleware/ws-client';
 import './app.scss';
 import FooterComponent from './components/footer';
+import { Container } from 'bloomer/lib/layout/Container';
 
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);

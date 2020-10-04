@@ -1,4 +1,5 @@
+@use './variables';
 .footer-wrapper {
     background-color: #3b3842;
-    height: 50px;
+    height: variables.$footer-height;
 }

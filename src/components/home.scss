@@ -1,0 +1,5 @@
+@use './variables';
+$homeHeight: calc(100vh - #{variables.$footer-height});
+.home-wrapper {
+    height: $homeHeight;
+}
