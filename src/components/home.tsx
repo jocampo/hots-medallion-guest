@@ -4,7 +4,15 @@ import './home.scss';
 
 class HomeComponent extends React.Component {
     render() {
-        return <Container className="home-wrapper">:3</Container>;
+        return (
+            <Container className="home-wrapper">
+                <div className="title-wrapper">
+                    <span>HotS Medallion</span>
+                    <span>Tracker</span>
+                </div>
+                <div className="form-wrapper">BattleTag/Name</div>
+            </Container>
+        );
     }
 }
 

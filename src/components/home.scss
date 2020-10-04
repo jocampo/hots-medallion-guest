@@ -2,4 +2,16 @@
 $homeHeight: calc(100vh - #{variables.$footer-height});
 .home-wrapper {
     height: $homeHeight;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .title-wrapper {
+        height: 100%;
+        width: 50%;
+    }
+
+    .form-wrapper {
+        height: 100%;
+        width: 50%;
+    }
 }
