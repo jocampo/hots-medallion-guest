@@ -1,6 +1,12 @@
 import { Hero, Room, User } from '../entities/types';
 
-export default class GuestState {
+export interface GuestStateI {
+    room: Room | null;
+    user: User | null;
+    heroes: Array<Hero>;
+}
+
+export default class GuestState implements GuestStateI {
     readonly room: Room | null = null;
     readonly user: User | null = null;
     readonly heroes: Array<Hero> = [];
