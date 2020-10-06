@@ -3,21 +3,25 @@ import { Store } from 'redux';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SockJS, { OPEN, OpenEvent } from 'sockjs-client';
 import GuestState from '../redux/guest-state';
+import { WsPayload } from './message-types';
 
 const WS_PORT = 8080;
 enum WS_ROUTES {
     ROOMS = 'rooms',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface AbstractPayloadData {} // TODO: Temporary: does this make sense? can we actually reuse request data?
-
-interface WsPayload {
-    msgType: string;
-    data: AbstractPayloadData;
+export interface WSHandlerI {
+    roomsWebSocket: WebSocket | null;
+    store: Store<GuestState> | null;
+    initialize();
+    sendMessage(payload: WsPayload);
+    isConnected(): boolean;
+    handleWSMessage(payload: WsPayload);
+    handleOnOpen(openEvent: OpenEvent);
+    handleOnClose(closeEvent: CloseEvent);
 }
 
-class WSHandler {
+class WSHandler implements WSHandlerI {
     roomsWebSocket: WebSocket | null = null;
 
     // Redux store ref
