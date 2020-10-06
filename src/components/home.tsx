@@ -1,13 +1,20 @@
 import { Container } from 'bloomer/lib/layout/Container';
+import { inject, injectable } from 'inversify';
 import React from 'react';
-import WSHandler from '../middleware/ws-client';
+import { TYPES } from '../inversify/container-types';
+import { MessageTypes, WsPayload } from '../middleware/message-types';
+import { WSHandlerI } from '../middleware/ws-client';
 import '../styles/home.scss';
 
 interface HomeState {
     userName: string;
 }
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 class HomeComponent extends React.Component<{}, HomeState> {
+    @inject(TYPES.WsHandler)
+    private wsHandler: WSHandlerI;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -30,7 +37,13 @@ class HomeComponent extends React.Component<{}, HomeState> {
     }
 
     createRoom() {
-        // TODO
+        this.wsHandler.sendMessage({
+            msgType: MessageTypes.BOOK_ROOM,
+            data: {
+                userName: this.state.userName,
+            },
+        } as WsPayload);
+        // TODO: fixme
     }
 
     isUserNameValid(userName?: string): boolean {
