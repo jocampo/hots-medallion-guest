@@ -2,31 +2,29 @@ import './reset.css';
 import 'bulma/css/bulma.css';
 import React from 'react';
 import ReactDom from 'react-dom';
-import store from './redux/create-store';
 import { Provider } from 'react-redux';
 import HomeComponent from './components/home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import WSHandler from './middleware/ws-client';
 import './app.scss';
 import FooterComponent from './components/footer';
+import { appContainer } from './inversify/inversify.config';
+import { Store } from 'redux';
+import { GuestStateI } from './redux/guest-state';
+import { TYPES } from './inversify/container-types';
 
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);
-const wsHandler = new WSHandler(store);
-wsHandler.initialize();
-const WebSocketContext = React.createContext(wsHandler);
 
+const store = appContainer.get<Store<GuestStateI>>(TYPES.ReduxStore);
 class App extends React.Component {
     render() {
         return (
-            <WebSocketContext.Provider value={wsHandler}>
-                <Provider store={store}>
-                    <HomeComponent />
-                    <FooterComponent />
-                    <ToastContainer />
-                </Provider>
-            </WebSocketContext.Provider>
+            <Provider store={store}>
+                <HomeComponent />
+                <FooterComponent />
+                <ToastContainer />
+            </Provider>
         );
     }
 }
