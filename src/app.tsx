@@ -8,15 +8,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './app.scss';
 import FooterComponent from './components/footer';
-import { appContainer } from './inversify/inversify.config';
+import appContainer from './inversify/inversify.config';
 import { Store } from 'redux';
 import { GuestStateI } from './redux/guest-state';
 import { TYPES } from './inversify/container-types';
+import { WSHandlerI } from './middleware/ws-client';
 
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);
 
 const store = appContainer.get<Store<GuestStateI>>(TYPES.ReduxStore);
+console.log(store);
+console.log(appContainer.get<WSHandlerI>(TYPES.WsHandler));
 class App extends React.Component {
     render() {
         return (

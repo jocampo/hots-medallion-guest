@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-import 'reflect-metadata';
 import { Store } from 'redux';
 import WSHandler, { WSHandlerI } from '../middleware/ws-client';
 import store from '../redux/create-store';
@@ -14,4 +13,4 @@ wsHandler.initialize();
 
 appContainer.bind<WSHandlerI>(TYPES.WsHandler).toConstantValue(wsHandler);
 
-export { appContainer };
+export default appContainer;

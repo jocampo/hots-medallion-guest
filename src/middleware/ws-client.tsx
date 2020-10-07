@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
 import { Store } from 'redux';
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import SockJS, { OPEN, OpenEvent } from 'sockjs-client';
 import GuestState from '../redux/guest-state';
 import { WsPayload } from './message-types';
+import { injectable } from 'inversify';
 
 const WS_PORT = 8080;
 enum WS_ROUTES {
@@ -21,6 +21,7 @@ export interface WSHandlerI {
     handleOnClose(closeEvent: CloseEvent);
 }
 
+@injectable()
 class WSHandler implements WSHandlerI {
     roomsWebSocket: WebSocket | null = null;
 
