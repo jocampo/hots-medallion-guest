@@ -40,7 +40,7 @@ class HomeComponent extends React.Component<HomeProps, HomeState> {
 
     createRoom() {
         this.wsHandler.sendMessage({
-            msgType: MessageTypes.BOOK_ROOM,
+            type: MessageTypes.BOOK_ROOM,
             data: {
                 userName: this.state.userName,
             },

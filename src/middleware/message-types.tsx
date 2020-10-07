@@ -19,6 +19,6 @@ export enum MessageTypes {
 interface AbstractPayloadData {} // TODO: Temporary: does this make sense? can we actually reuse request data?
 
 export interface WsPayload {
-    msgType: MessageTypes;
+    type: MessageTypes;
     data: AbstractPayloadData;
 }

@@ -66,7 +66,7 @@ class WSHandler implements WSHandlerI {
     }
 
     handleWSMessage(payload: WsPayload) {
-        console.log('Received payload from ws', JSON.stringify(payload));
+        console.log('Received payload from ws', payload);
         console.log(this);
     }
 
