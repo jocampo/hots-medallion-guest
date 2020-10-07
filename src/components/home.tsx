@@ -1,7 +1,5 @@
 import { Container } from 'bloomer/lib/layout/Container';
-import { inject, injectable } from 'inversify';
 import React from 'react';
-import { TYPES } from '../inversify/container-types';
 import { MessageTypes, WsPayload } from '../middleware/message-types';
 import { WSHandlerI } from '../middleware/ws-client';
 import '../styles/home.scss';
@@ -10,16 +8,20 @@ interface HomeState {
     userName: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-class HomeComponent extends React.Component<{}, HomeState> {
-    @inject(TYPES.WsHandler)
+interface HomeProps {
+    wsHandler: WSHandlerI;
+}
+
+class HomeComponent extends React.Component<HomeProps, HomeState> {
     private wsHandler: WSHandlerI;
 
-    constructor(props) {
+    constructor(props: HomeProps) {
         super(props);
         this.state = {
             userName: '',
         };
+        this.wsHandler = props.wsHandler;
+        console.log(this.wsHandler);
 
         this.handleUserNameChange = this.handleUserNameChange.bind(this);
         this.isUserNameValid = this.isUserNameValid.bind(this);

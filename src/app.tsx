@@ -18,13 +18,14 @@ const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);
 
 const store = appContainer.get<Store<GuestStateI>>(TYPES.ReduxStore);
-console.log(store);
-console.log(appContainer.get<WSHandlerI>(TYPES.WsHandler));
+
+// TODO: While I fix the @injected properties not resolving, we're going to pass this down as a prop
+const wsHandler = appContainer.get<WSHandlerI>(TYPES.WsHandler);
 class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <HomeComponent />
+                <HomeComponent wsHandler={wsHandler} />
                 <FooterComponent />
                 <ToastContainer />
             </Provider>
