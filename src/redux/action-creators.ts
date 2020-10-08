@@ -19,9 +19,12 @@ export const ActionCreators = {
         type: ActionTypes.LEAVE_ROOM,
         payload: null,
     }),
-    userJoinedRoom: (user: User): BaseFSAAction => ({
+    userJoinedRoom: (user: User, room: Room): BaseFSAAction => ({
         type: ActionTypes.USER_JOINED_ROOM,
-        payload: user,
+        payload: {
+            user,
+            room,
+        },
     }),
     userLeftRoom: (user: User): BaseFSAAction => ({
         type: ActionTypes.USER_LEFT_ROOM,
