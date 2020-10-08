@@ -3,7 +3,7 @@
 // but for now we'll just go for quick and dirty
 export interface BaseFSAAction {
     type: string;
-    payload: unknown;
+    payload;
 }
 
 // As to what each one of these actions requires in the payload, it's up to the reducer to validate 🤔
