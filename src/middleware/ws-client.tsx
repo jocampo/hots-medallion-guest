@@ -2,27 +2,28 @@ import { toast } from 'react-toastify';
 import { Store } from 'redux';
 import SockJS, { OPEN, OpenEvent } from 'sockjs-client';
 import GuestState from '../redux/guest-state';
-import { WsPayload } from './message-types';
+import { MessageTypes, WsPayload } from './message-types';
 import { injectable } from 'inversify';
+import { ActionCreators } from '../redux/action-creators';
 
 const WS_PORT = 8080;
 enum WS_ROUTES {
     ROOMS = 'rooms',
 }
 
-export interface WSHandlerI {
+export interface IWSHandler {
     roomsWebSocket: WebSocket | null;
     store: Store<GuestState> | null;
     initialize();
     sendMessage(payload: WsPayload);
     isConnected(): boolean;
-    handleWSMessage(payload: WsPayload);
+    handleWSMessage(payload: MessageEvent);
     handleOnOpen(openEvent: OpenEvent);
     handleOnClose(closeEvent: CloseEvent);
 }
 
 @injectable()
-class WSHandler implements WSHandlerI {
+class WSHandler implements IWSHandler {
     roomsWebSocket: WebSocket | null = null;
 
     // Redux store ref
@@ -38,7 +39,7 @@ class WSHandler implements WSHandlerI {
         if (!this.roomsWebSocket) {
             try {
                 this.roomsWebSocket = new SockJS(`http://${location.hostname}:${WS_PORT}/${WS_ROUTES.ROOMS}`);
-                this.roomsWebSocket.onmessage = (msg) => this.handleWSMessage(JSON.parse(msg as any));
+                this.roomsWebSocket.onmessage = this.handleWSMessage.bind(this);
                 this.roomsWebSocket.onclose = this.handleOnClose.bind(this);
                 this.roomsWebSocket.onopen = this.handleOnOpen.bind(this);
             } catch (e) {
@@ -65,9 +66,30 @@ class WSHandler implements WSHandlerI {
         return this.roomsWebSocket !== null && this.roomsWebSocket.readyState === OPEN;
     }
 
-    handleWSMessage(payload: WsPayload) {
-        console.log('Received payload from ws', payload);
-        console.log(this);
+    handleWSMessage(event: MessageEvent) {
+        const payload: WsPayload = JSON.parse(event.data);
+        console.log(`Received message with the following payload`, payload);
+        switch (payload.msgType) {
+            case MessageTypes.USER_JOINED_ROOM:
+                this.store?.dispatch(ActionCreators.userJoinedRoom(payload.data.user, payload.data.room));
+                break;
+            case MessageTypes.USER_LEFT_ROOM:
+                break;
+            case MessageTypes.ERROR_OCCURRED:
+                break;
+            case MessageTypes.HERO_ADDED:
+                break;
+            case MessageTypes.HERO_REMOVED:
+                break;
+            case MessageTypes.MEDALLION_USED:
+                break;
+            case MessageTypes.MEDALLION_OFF_CD:
+                break;
+            case MessageTypes.CANCEL_MEDALLION:
+                break;
+            default:
+                toast.error(`Received unrecognized event ${payload.msgType}`);
+        }
     }
 
     handleOnOpen(openEvent: OpenEvent) {
