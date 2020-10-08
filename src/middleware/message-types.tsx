@@ -15,10 +15,7 @@ export enum MessageTypes {
     CANCEL_MEDALLION = 'cancelMedallion',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface AbstractPayloadData {} // TODO: Temporary: does this make sense? can we actually reuse request data?
-
 export interface WsPayload {
-    type: MessageTypes;
-    data: AbstractPayloadData;
+    msgType: MessageTypes;
+    data;
 }
