@@ -1,15 +1,15 @@
 import { Hero, Room, User } from '../entities/types';
 
-export interface GuestStateI {
+export interface IGuestState {
     room: Room | null;
     user: User | null;
     heroes: Array<Hero>;
 }
 
-export default class GuestState implements GuestStateI {
-    readonly room: Room | null = null;
-    readonly user: User | null = null;
-    readonly heroes: Array<Hero> = [];
+export default class GuestState implements IGuestState {
+    public room: Room | null = null;
+    public user: User | null = null;
+    public heroes: Array<Hero> = [];
 
     constructor(room: Room | null, user: User | null, heroes: Array<Hero>) {
         this.room = room;

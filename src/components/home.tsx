@@ -1,7 +1,7 @@
 import { Container } from 'bloomer/lib/layout/Container';
 import React from 'react';
 import { MessageTypes, WsPayload } from '../middleware/message-types';
-import { WSHandlerI } from '../middleware/ws-client';
+import { IWSHandler } from '../middleware/ws-client';
 import '../styles/home.scss';
 
 interface HomeState {
@@ -9,11 +9,11 @@ interface HomeState {
 }
 
 interface HomeProps {
-    wsHandler: WSHandlerI;
+    wsHandler: IWSHandler;
 }
 
 class HomeComponent extends React.Component<HomeProps, HomeState> {
-    private wsHandler: WSHandlerI;
+    private wsHandler: IWSHandler;
 
     constructor(props: HomeProps) {
         super(props);
@@ -40,7 +40,7 @@ class HomeComponent extends React.Component<HomeProps, HomeState> {
 
     createRoom() {
         this.wsHandler.sendMessage({
-            type: MessageTypes.BOOK_ROOM,
+            msgType: MessageTypes.BOOK_ROOM,
             data: {
                 userName: this.state.userName,
             },
