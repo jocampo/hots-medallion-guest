@@ -74,8 +74,10 @@ class WSHandler implements IWSHandler {
                 this.store?.dispatch(ActionCreators.userJoinedRoom(payload.data.user, payload.data.room));
                 break;
             case MessageTypes.USER_LEFT_ROOM:
+                this.store?.dispatch(ActionCreators.userLeftRoom(payload.data.user));
                 break;
             case MessageTypes.ERROR_OCCURRED:
+                toast.error(`Error code ${payload.data.code}! ${payload.data.message}`);
                 break;
             case MessageTypes.HERO_ADDED:
                 break;
