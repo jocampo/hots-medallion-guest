@@ -69,6 +69,7 @@ class WSHandler implements IWSHandler {
     handleWSMessage(event: MessageEvent) {
         const payload: WsPayload = JSON.parse(event.data);
         console.log(`Received message with the following payload`, payload);
+        const state = this.store?.getState();
         switch (payload.msgType) {
             case MessageTypes.USER_JOINED_ROOM:
                 this.store?.dispatch(ActionCreators.userJoinedRoom(payload.data.user, payload.data.room));
@@ -80,6 +81,10 @@ class WSHandler implements IWSHandler {
                 toast.error(`Error code ${payload.data.code}! ${payload.data.message}`);
                 break;
             case MessageTypes.HERO_ADDED:
+                const roomCode = payload.data.roomCode;
+                if (state?.room?.code === roomCode) {
+                    this.store?.dispatch(ActionCreators.addHero(payload.data.hero, payload.data.team));
+                }
                 break;
             case MessageTypes.HERO_REMOVED:
                 break;
