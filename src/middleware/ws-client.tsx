@@ -87,6 +87,9 @@ class WSHandler implements IWSHandler {
                 }
                 break;
             case MessageTypes.HERO_REMOVED:
+                if (state?.room?.code === payload.data.roomCode) {
+                    this.store?.dispatch(ActionCreators.removeHero(payload.data.hero, payload.data.team));
+                }
                 break;
             case MessageTypes.MEDALLION_USED:
                 break;
